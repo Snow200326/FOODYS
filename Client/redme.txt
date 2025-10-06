@@ -1,0 +1,12 @@
+Name :- Foodys
+
+tailwind
+axios
+rotuer
+
+
+backgoundcolor = @theme {
+  --color-regal-blue: #fff4f1; 
+}
+
+login color = #dc583e
