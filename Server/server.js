@@ -7,17 +7,15 @@ import clerkWebhooks from './Component/ClerkwebHook.js';
 
 const app = express();
 const port = process.env.Port || 5000;
-
-
+await connectDb();
 app.use(cors()); // allow all origins
 app.use(express.json());
 app.use(clerkMiddleware())
-app.use('/api/ckerk',clerkWebhooks)
+app.use('/api/clerk',clerkWebhooks)
 
 app.get("/", (req, res) => {
   res.send("API connected successfully");
 });
-await connectDb();
 
 app.listen(port, 'localhost', () => {
   console.log(`Server running at http://localhost:${port}/`);
