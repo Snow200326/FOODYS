@@ -1,27 +1,61 @@
+import User from "../Models/user.js";
 import { Webhook } from "svix";
-import { buffer } from "micro";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+const clerkWebhooks = async (req, res) => {
+    try {
+        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET_KEY);
+        console.log(whook)
 
-  const payload = (await buffer(req)).toString("utf8");
+        const headers = {
+            "svix-id": req.headers["svix-id"],
+            "svix-signature": req.headers["svix-signature"],
+            "svix-timestamp": req.headers["svix-timestamp"],
+        };
+        console.log(headers)
+            const payload = req.body.toString("utf8");
+            console.log(payload)
+            const evt = whook.verify(payload, headers);
 
-  const headers = {
-    "svix-id": req.headers["svix-id"],
-    "svix-timestamp": req.headers["svix-timestamp"],
-    "svix-signature": req.headers["svix-signature"],
-  };
+      
 
-  try {
-    const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET_KEY);
-    const evt = wh.verify(payload, headers);
+        const { data, type } = evt ;
 
-    console.log("✅ Clerk Webhook Event:", evt.type);
-    res.status(200).json({ success: true });
-  } catch (err) {
-    console.error("❌ Verification failed:", err.message);
-    res.status(400).json({ success: false });
-  }
-}
+        switch (type) {
+            case "user.created": {
+                const userData = {
+                    _id: data.id,
+                    email: data.email_addresses[0].email_address,
+                    username: data.first_name + ' ' + data.last_name,
+                    image: data.image_url,
+                };
+                await User.create(userData);
+                break;
+            }
+
+            case "user.updated": {
+                await User.findByIdAndUpdate(data.id, {
+                    email: data.email_addresses[0].email_address||"no-email@example.com",
+                    username: data.first_name + ' ' + data.last_name,
+                    image: data.image_url,
+                });
+                break;
+            }
+
+            case "user.deleted": {
+                await User.findByIdAndDelete(data.id);
+                break;
+            }
+
+            default:
+                console.log("Unhandled webhook type:", type);
+        }
+
+        res.status(200).json({ success: true, message: "Webhook received" });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(400).json({ success: false, message: 'Webhook not received' });
+    }
+};
+
+export default clerkWebhooks;
