@@ -15,39 +15,7 @@ const clerkWebhooks = async (req, res) => {
         await whook.verify(JSON.stringify(req.body),headers);
 
         const { data, type } = req.body;
-    
-
-        switch (type) {
-            case "user.created": {
-                const userData = {
-                    _id: data.id,
-                    email: data.email_address,
-                    name: data.first_name + ' ' + data.last_name,
-                    image: data.image_url,
-                };
-                await User.create(userData);
-                break;
-            }
-
-            case "user.updated": {
-                await User.findByIdAndUpdate(data.id, {
-                    // email: data.email[0].email_address,
-                    name: data.first_name + ' ' + data.last_name,
-                    image: data.image_url,
-                });
-                break;
-            }
-
-            case "user.deleted": {
-                await User.findByIdAndDelete(data.id);
-                break;
-            }
-
-            default:
-                console.log("Unhandled webhook type:", type);
-        }
-
-        res.status(200).json({ success: true, message: "Webhook received" });
+        res.send(505).json({data})        
 
     } catch (error) {
         console.log(error.message);
