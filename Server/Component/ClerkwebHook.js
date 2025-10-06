@@ -10,9 +10,8 @@ const clerkWebhooks = async (req, res) => {
             "svix-signature": req.headers["svix-signature"],
             "svix-timestamp": req.headers["svix-timestamp"],
         };
-svix-id
 
-        await whook.verify(JSON.stringify(req.body), headers);
+        await whook.verify(JSON.stringify(req.body),headers);
 
         const { data, type } = req.body;
 
