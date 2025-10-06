@@ -13,10 +13,8 @@ const startServer = async () => {
 
   app.use(cors());
 
-  // 👇 Webhook FIRST (raw body)
   app.use("/api/clerk", clerkWebhooks);
 
-  // 👇 Then JSON middleware for rest of routes
   app.use(express.json());
   app.use(clerkMiddleware());
 
