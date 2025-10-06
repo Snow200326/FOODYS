@@ -13,11 +13,11 @@ const startServer = async () => {
 
   app.use(cors());
 
-  app.get("/api/clerk", clerkWebhooks);
-
+  
   app.use(express.json());
   app.use(clerkMiddleware());
-
+  
+  app.use("/api/clerk", clerkWebhooks);
   app.get("/", (req, res) => {
     res.send("API connected successfully");
   });
