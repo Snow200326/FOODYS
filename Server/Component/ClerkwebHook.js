@@ -10,7 +10,7 @@ const clerkWebhooks = async (req, res) => {
       "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"]
     };
-
+    console.log(headers)
 
         await whook.verify(JSON.stringify(req.body),headers);
 
@@ -21,8 +21,8 @@ const clerkWebhooks = async (req, res) => {
             case "user.created": {
                 const userData = {
                     _id: data.id,
-                    email: data.email[0].email_address,
-                    username: data.first_name + ' ' + data.last_name,
+                    email: data.email_address,
+                    name: data.first_name + ' ' + data.last_name,
                     image: data.image_url,
                 };
                 await User.create(userData);
@@ -31,8 +31,8 @@ const clerkWebhooks = async (req, res) => {
 
             case "user.updated": {
                 await User.findByIdAndUpdate(data.id, {
-                    email: data.email[0].email_address,
-                    username: data.first_name + ' ' + data.last_name,
+                    // email: data.email[0].email_address,
+                    name: data.first_name + ' ' + data.last_name,
                     image: data.image_url,
                 });
                 break;
