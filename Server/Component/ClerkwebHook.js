@@ -30,7 +30,7 @@ svix-id
 
             case "user.updated": {
                 await User.findByIdAndUpdate(data.id, {
-                    email: data.email_addresses[0].email_address,
+                    email: data.email_addresses[0].email_address||"no-email@example.com",
                     username: data.first_name + ' ' + data.last_name,
                     image: data.image_url,
                 });
