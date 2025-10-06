@@ -1,1 +1,0 @@
- export const mongoUri = "mongodb+srv://dnyaneshdahiwadkar25_db_user:Dnyanesh@cluster0.a2ks4hv.mongodb.net/Foodie"
