@@ -15,6 +15,7 @@ const clerkWebhooks = async (req, res) => {
         await whook.verify(JSON.stringify(req.body),headers);
 
         const { data, type } = req.body;
+        console.log(data)
         res.send(505).json({data})        
 
     } catch (error) {
