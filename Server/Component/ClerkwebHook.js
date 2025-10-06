@@ -6,7 +6,7 @@ const clerkWebhooks = async (req, res) => {
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET_KEY)
         const header = {
             "svix-id": req.header["svix-id"],
-            "svix-timestapms": req.header["svix-timestapms"],
+            "svix-timestapm": req.header["svix-timestapm"],
             "svix-sgnature": req.header["svix-signature"]
         }
         await whook.verify(JSON.stringify(req.body), header)
