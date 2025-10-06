@@ -11,7 +11,7 @@ const app = express();
 app.use(cors()); // allow all origins
 app.use(express.json());
 app.use(clerkMiddleware())
-app.use('/api/clerk',clerkWebhooks)
+app.use('/api/clerk',clerkWebhooks())
 
 app.get("/", (req, res) => {
   res.send("API connected successfully");
