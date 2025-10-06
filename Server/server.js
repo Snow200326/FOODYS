@@ -13,7 +13,7 @@ const startServer = async () => {
 
   app.use(cors());
 
-  app.use("/api/clerk", clerkWebhooks);
+  app.get("/api/clerk", clerkWebhooks);
 
   app.use(express.json());
   app.use(clerkMiddleware());
