@@ -10,10 +10,12 @@ const clerkWebhooks = async (req, res) => {
             "svix-signature": req.headers["svix-signature"],
             "svix-timestamp": req.headers["svix-timestamp"],
         };
+            const payload = req.body.toString("utf8");
+            const evt = whook.verify(payload, headers);
 
-        await whook.verify(JSON.stringify(req.body),headers);
+      
 
-        const { data, type } = req.body;
+        const { data, type } = evt ;
 
         switch (type) {
             case "user.created": {
