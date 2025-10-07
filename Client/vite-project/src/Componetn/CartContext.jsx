@@ -1,16 +1,40 @@
 
-import { useUser } from "@clerk/clerk-react";
-import { createContext, useState } from "react";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios"
 import { useNavigate } from "react-router";
+import {toast} from "react-toastify"
+axios.defaults.baseURL=import.meta.env.VITE_BACKEND_URI;
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const {user}=useUser()
   const [isOwner , setOwner]=useState(true);
-  const [User,setUser] = useState({firstname:"Dnyanesh" , lastname:"Dahiwadkar"})
+
   const navigate = useNavigate();
+  const {gettoken} = useAuth()
+  const {user}=useUser()
+
+  const getuser = async () =>{
+    try {
+      const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await gettoken()}`}})
+      console.log(data)
+      if(data.success)
+      {
+        setOwner(data.role === "owner")
+        setCart(data.cartData || {})
+      }else
+      {
+        setTimeout(() => {
+          getuser();
+        }, 5000);
+      }
+    } catch (error) {
+      toast.error(error.message)
+      
+    }
+  }
 
   const addToCart = (product) => {
     setCart((prev) => {
@@ -43,10 +67,16 @@ export const CartProvider = ({ children }) => {
   };
 
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  useEffect(()=>{
+    if(user){
+      getuser()
+    }
+
+  },[user])
 
   return (
     <CartContext.Provider
-      value={{ cart, count, addToCart, removeFromCart, clearFromCart ,user,User,navigate,isOwner }}
+      value={{ cart, count, addToCart, removeFromCart, getuser, clearFromCart ,user,navigate,isOwner }}
     >
       {children}
     </CartContext.Provider>

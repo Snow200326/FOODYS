@@ -20,7 +20,6 @@ export const AddToCart = async (req,res)=>{
         }
         await User.findByIdAndUpdate(userId,{cartData})
         res.json({success:true,message:"Added to Cart"})
-
     } catch (error) {
         console.log(error.message)
         res.json({success:false,message:error.message})
