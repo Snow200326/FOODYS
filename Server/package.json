@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel": "node server.js"
+    "vercel": "node server.js",
+    "server": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "express": "^5.1.0",
     "mongoose": "^8.19.0",
     "multer": "^2.0.2",
+    "nodemon": "^3.1.10",
     "stripe": "^19.0.0",
     "svix": "^1.76.1"
   }
