@@ -15,11 +15,11 @@ app.use(cors());
 app.use(express.json())
 app.use(clerkMiddleware())
 
-app.use('/',clerkWebhooks)
+app.use('/api/clerk', clerkWebhooks)
 
-// app.get('/',(req,res)=>{
-//     res.send("Api successfully connectedeeeeee")
-// })
+app.get('/', (req, res) => {
+  res.send("Api successfully connectedeeeeee")
+})
 
 
 app.listen(port, () => {
