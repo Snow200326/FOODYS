@@ -1,7 +1,10 @@
 
-import { useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router";
+import axios from 'axios';
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URI
+import { toast } from "react-toastify"
 
 export const CartContext = createContext();
 
@@ -11,7 +14,25 @@ export const CartProvider = ({ children }) => {
   const [isOwner , setOwner]=useState(true);
   const [User,setUser] = useState({firstname:"Dnyanesh" , lastname:"Dahiwadkar"})
   const navigate = useNavigate();
-
+  const {gettoken} = useAuth();
+  const  getUser = async ()=>{
+    try {
+      const {data} = await axios.get('/api/user',{headers:{Authorization:`Bearer ${await gettoken()}`}})
+      if(data.success){
+        setOwner(data.role === "owner")
+        setcartData(data.cartData || {})
+      }else{
+        setTimeout(() => {
+          getUser();
+        },5000);
+      }
+      
+    } catch (error) {
+      toast.error(error.message)
+      
+    }
+  }
+    
   const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item._id === product._id);
