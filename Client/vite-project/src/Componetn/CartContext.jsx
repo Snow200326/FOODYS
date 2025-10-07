@@ -26,10 +26,8 @@ export const CartProvider = ({ children }) => {
           getUser();
         },5000);
       }
-      
     } catch (error) {
       toast.error(error.message)
-      
     }
   }
     
