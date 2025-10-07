@@ -6,3 +6,4 @@ const userRouter = express.Router()
 userRouter.get('/',autUser,getUserProfile)
 
 export default userRouter;
+
