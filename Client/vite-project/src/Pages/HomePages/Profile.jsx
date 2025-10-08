@@ -17,7 +17,8 @@ export const Profile = () => {
     <div className='flex space-x-6 items-center relative'>
 
       <div>
-        {isOwner && (
+
+        {isOwner || (
           <button onClick={()=>navigate('/owner')} className='border-2'>
             Dashboard
           </button>

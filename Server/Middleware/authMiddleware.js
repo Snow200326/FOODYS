@@ -1,10 +1,12 @@
 // import { useId } from "react"
+import { useId } from "react"
 import User from "../Models/user.js"
 
 
 export const autUser = async(req,res,next) =>{
     try {
-        const{userId}=req.auth
+        const{userId}=req.auth()
+        console.log(useId)
         if(!userId)
         {
             return res.json({success:false,message:"not Authorized"})
