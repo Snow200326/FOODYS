@@ -10,7 +10,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const [isOwner , setOwner]=useState(true);
+  const [isOwner , setOwner]=useState(false);
 
   const navigate = useNavigate();
   const {user}=useUser()
@@ -71,16 +71,15 @@ export const CartProvider = ({ children }) => {
   };
 
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  useEffect(()=>{
-    if(user){
-      getuser()
-    }
-
-  },[user])
+  // useEffect(()=>{
+  //   if(user){
+  //     getuser()
+  //   }
+  // },[user])
 
   return (
     <CartContext.Provider
-      value={{ cart, count, addToCart, removeFromCart, getuser, clearFromCart ,user,navigate,isOwner }}
+      value={{ cart, count, addToCart,navigate, removeFromCart, getuser, clearFromCart ,user,navigate,isOwner,getToken}}
     >
       {children}
     </CartContext.Provider>
