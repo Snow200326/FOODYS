@@ -15,12 +15,12 @@ export const CartProvider = ({ children }) => {
   const navigate = useNavigate();
   const {getToken} = useAuth()
   const {user}=useUser()
-  console.log(user)
+  // console.log(user)
 
   const getuser = async () =>{
     try {
       const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await getToken()}`}})
-      console.log(data.role)
+      // console.log(data.role)
       if(data.success)
       {
         setOwner(data.role === "owner")
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }) => {
       }
     });
   };
-  console.log(cart)
+  // console.log(cart)
 
   const removeFromCart = (productId) => {
     setCart((prev) =>
