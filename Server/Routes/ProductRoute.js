@@ -1,6 +1,6 @@
 import express from "express"
-import { upload } from "./Middleware/multer.js"
-import autUser  from "./Middleware/authMiddleware.js"
+import {upload} from"../Middleware/multer.js"
+import autUser  from "../Middleware/authMiddleware.js"
 import { creatProduct,listProduct,singleProduct,toggleStock } from "../Component/ProductController.js"
 
 const productRouter = express.Router()

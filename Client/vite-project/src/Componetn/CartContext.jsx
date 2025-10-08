@@ -13,12 +13,17 @@ export const CartProvider = ({ children }) => {
   const [isOwner , setOwner]=useState(true);
 
   const navigate = useNavigate();
-  const {gettoken} = useAuth()
   const {user}=useUser()
-
+  console.log(user)
+    const { userId, sessionId, getToken, isLoaded, isSignedIn } = useAuth();
   const getuser = async () =>{
     try {
-      const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await gettoken()}`}})
+      
+      const token = await getToken()
+      
+      const {data} = await axios.get("/api/user",  { headers: {
+        Authorization: `Bearer ${token}`,
+      }},)
       console.log(data)
       if(data.success)
       {
@@ -32,6 +37,7 @@ export const CartProvider = ({ children }) => {
       }
     } catch (error) {
       toast.error(error.message)
+      console.log(error.message)
       
     }
   }
@@ -50,8 +56,6 @@ export const CartProvider = ({ children }) => {
       }
     });
   };
-  console.log(cart)
-
   const removeFromCart = (productId) => {
     setCart((prev) =>
       prev

@@ -1,5 +1,5 @@
 import express from 'express';
-import autUser from './Middleware/authMiddleware.js';
+import autUser from '../Middleware/authMiddleware.js';
 import { addAddress, getAddress } from '../Component/AddressController.js';
 
 const AddressRoute = express.Router();

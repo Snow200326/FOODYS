@@ -22,10 +22,10 @@ app.use(express.json())
 app.use(clerkMiddleware())
 
 app.use('/api/clerk',clerkWebhooks)
-// app.use('/api/user',userRouter)
-// app.use("/api/products",productRouter)
-// app.use("/api/addresses",AddressRoute)
-// app.use("/api/Cart",CartRouter)
+app.use('/api/user',userRouter)
+app.use("/api/products",productRouter)
+app.use("/api/addresses",AddressRoute)
+app.use("/api/Cart",CartRouter)
 
 
 app.get('/',(req,res)=>{

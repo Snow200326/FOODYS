@@ -1,5 +1,6 @@
 import { useId } from "react"
-import User from "../../Models/user.js"
+import User from "../Models/user.js"
+
 
 export const autUser = async(req,res,next) =>{
     try {
