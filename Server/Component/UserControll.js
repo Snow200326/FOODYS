@@ -1,7 +1,8 @@
 export const getUserProfile = (req,res) =>{
     try {
-        const role = req.users.role;
-        const cartData = req.users.cartData
+        const role = req.user.role;
+        console.log(role)
+        const cartData = req.user.cartData
         res.JSON({success:true,role:cartData})
         
     } catch (error) {
