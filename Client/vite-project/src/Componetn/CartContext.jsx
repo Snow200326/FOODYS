@@ -10,16 +10,17 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const [isOwner , setOwner]=useState(true);
+  const [isOwner , setOwner]=useState(false);
 
   const navigate = useNavigate();
   const {getToken} = useAuth()
   const {user}=useUser()
+  console.log(user)
 
   const getuser = async () =>{
     try {
       const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await getToken()}`}})
-      console.log(data)
+      console.log(data.role)
       if(data.success)
       {
         setOwner(data.role === "owner")
@@ -32,6 +33,7 @@ export const CartProvider = ({ children }) => {
       }
     } catch (error) {
       toast.error(error.message)
+      console.log(error.message)
       
     }
   }
@@ -71,7 +73,6 @@ export const CartProvider = ({ children }) => {
     if(user){
       getuser()
     }
-
   },[user])
 
   return (

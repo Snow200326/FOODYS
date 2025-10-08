@@ -18,11 +18,10 @@ export const Profile = () => {
 
       <div>
 
-        {isOwner || (
+        {isOwner && (
           <button onClick={()=>navigate('/owner')} className='border-2'>
             Dashboard
           </button>
-
         )}
       </div>
       <div className=' md:hidden sm:block '>
