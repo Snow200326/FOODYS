@@ -4,7 +4,7 @@ import User from "../Models/user.js"
 
 export const autUser = async(req,res,next) =>{
     try {
-        const{userId}=req.auth
+        const{userId}=req.auth()
         if(!userId)
         {
             return res.json({success:false,message:"not Authorized"})
