@@ -13,12 +13,12 @@ export const CartProvider = ({ children }) => {
   const [isOwner , setOwner]=useState(true);
 
   const navigate = useNavigate();
-  const {gettoken} = useAuth()
+  const {getToken} = useAuth()
   const {user}=useUser()
 
   const getuser = async () =>{
     try {
-      const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await gettoken()}`}})
+      const {data} = await axios.get("/api/user",{headers:{Authorization :`Bearer ${ await getToken()}`}})
       console.log(data)
       if(data.success)
       {

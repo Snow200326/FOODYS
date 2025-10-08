@@ -13,7 +13,7 @@ export const autUser = async(req,res,next) =>{
         }
         let user = await User.findById(userId)
         if(!user){
-            return req.json({success:false,message:"Not Authorized"})
+            return res.json({success:false,message:"Not Authorized"})
         }
         const ownerEmail = process.env.ADMIN_EMAIL
         const newRole = ownerEmail && user.email === ownerEmail ? "owner":"user"
