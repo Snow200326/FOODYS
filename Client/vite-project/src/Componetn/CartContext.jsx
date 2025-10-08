@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
       if(data.success)
       {
         setOwner(data.role === "owner")
-        setCart(data.cartData || {})
+        setCart(data.cartData || [])
       }else
       {
         setTimeout(() => {
